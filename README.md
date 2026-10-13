@@ -1,8 +1,8 @@
 # Medical Supply Chain Management System
 
-Application Java en ligne de commande pour suivre un inventaire de fournitures médicales, les lots et leurs dates d'expiration, les fournisseurs et les commandes.
+Application de bureau Java avec plusieurs pages pour suivre un inventaire de fournitures médicales, les lots et leurs dates d'expiration, les fournisseurs et les commandes.
 
-Consultez le [guide d'utilisation et d'explication du projet](./GUIDE_UTILISATION.md) pour les instructions détaillées, le fonctionnement du menu et l'architecture.
+Consultez le [guide d'utilisation et d'explication du projet](./GUIDE_UTILISATION.md) pour les instructions détaillées, la navigation entre les pages et l'architecture.
 
 ## Fonctionnalités
 
@@ -34,7 +34,7 @@ Double-cliquez sur `lancer.bat`, ou exécutez-le depuis PowerShell à la racine 
 .\lancer.bat
 ```
 
-Le fichier compile le projet puis lance le menu interactif. Pour choisir un autre fichier de sauvegarde :
+Le fichier compile le projet puis ouvre l'application graphique. Pour choisir un autre fichier de sauvegarde :
 
 ```powershell
 .\lancer.bat "C:\medical-data\inventory.ser"

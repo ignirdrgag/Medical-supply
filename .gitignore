@@ -1,4 +1,5 @@
 target/
+.tools/
 data/
 *.ser
 *.ser.tmp

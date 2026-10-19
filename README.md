@@ -1,56 +1,36 @@
-# Medical Supply Chain Management System
+# MediSupply — application web JEE
 
-Application de bureau Java avec plusieurs pages pour suivre un inventaire de fournitures médicales, les lots et leurs dates d'expiration, les fournisseurs et les commandes.
+Application web Java de gestion des fournitures médicales. L'interface HTTP est fournie par `SupplyChainWebServlet`; les règles métier restent dans `SupplyChainService` et les données sont enregistrées dans un fichier sérialisé.
 
-Consultez le [guide d'utilisation et d'explication du projet](./GUIDE_UTILISATION.md) pour les instructions détaillées, la navigation entre les pages et l'architecture.
+## Outils requis
 
-## Fonctionnalités
+- JDK 17 ou supérieur
+- Apache Maven 3.9 ou supérieur
+- Un conteneur Jakarta Servlet 6, par exemple Tomcat 10.1+ ou WildFly compatible Jakarta EE 10
+- Un navigateur web
 
-- Consultation de l'inventaire avec stock total, stock utilisable et seuil minimum.
-- Création d'articles et de fournisseurs.
-- Réception de stock par lot, avec traçabilité du fournisseur et date d'expiration.
-- Sorties de stock appliquant FEFO (premier lot qui expire, premier sorti) et excluant les lots expirés.
-- Historique des sorties par article et destination (service clinique ou lieu de stockage).
-- Alertes sur les seuils bas et les lots expirant sous 30 jours.
-- Création et réception de commandes fournisseur.
-- Sauvegarde locale automatique dans `data/medical-supply-chain.ser`.
-- Initialisation avec quelques données de démonstration au premier lancement.
+Voir le [guide d'installation et de démarrage](./GUIDE_INSTALLATION.md) pour les téléchargements, la configuration de Windows et les étapes détaillées.
 
-## Prérequis
+## Construire et déployer
 
-JDK 17 ou supérieur. Maven est facultatif pour compiler directement avec `javac`.
-
-## Lancer avec Maven
-
-```powershell
-mvn compile exec:java
-```
-
-## Lancer avec le fichier de démarrage Windows
-
-Double-cliquez sur `lancer.bat`, ou exécutez-le depuis PowerShell à la racine du projet :
+À la racine du projet :
 
 ```powershell
 .\lancer.bat
 ```
 
-Le fichier compile le projet puis ouvre l'application graphique. Pour choisir un autre fichier de sauvegarde :
+Le script construit le WAR, le déploie dans le Tomcat local si `CATALINA_HOME` est défini, démarre le serveur et ouvre le navigateur. Pour construire seulement le WAR, lancez `mvn -DskipTests package`.
 
-```powershell
-.\lancer.bat "C:\medical-data\inventory.ser"
+Le fichier `target/medical-supply-chain-1.0.0.war` est le livrable à déployer dans le répertoire `webapps` de Tomcat ou depuis la console de déploiement WildFly. Démarrez le serveur et ouvrez `http://localhost:8080/medical-supply-chain/` ou `http://localhost:8080/medical-supply-chain/inventory`.
+
+Les données sont sauvegardées dans `data/medical-supply-chain.ser` pour cette configuration locale. Le chemin est configurable avec le paramètre de contexte `dataFile` dans `WEB-INF/web.xml`.
+
+## Structure web
+
+```text
+src/main/java/com/medical/supplychain/   classes métier, service et servlet
+src/main/webapp/WEB-INF/web.xml           descripteur de déploiement
+pom.xml                                   dépendance Servlet fournie par le serveur
 ```
 
-## Compiler et lancer sans Maven (PowerShell)
-
-```powershell
-$sources = Get-ChildItem -Recurse src\main\java -Filter *.java | ForEach-Object { $_.FullName }
-New-Item -ItemType Directory -Force target\classes | Out-Null
-javac -encoding UTF-8 -d target\classes $sources
-java -cp target\classes com.medical.supplychain.Main
-```
-
-Un chemin de sauvegarde différent peut être passé en argument :
-
-```powershell
-java -cp target\classes com.medical.supplychain.Main "C:\medical-data\inventory.ser"
-```
+L'API Jakarta Servlet est déclarée avec la portée Maven `provided` : le conteneur fournit cette bibliothèque à l'exécution. Les règles FEFO et les validations restent assurées par `SupplyChainService`.

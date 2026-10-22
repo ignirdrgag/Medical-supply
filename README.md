@@ -11,6 +11,8 @@ Application web Java de gestion des fournitures médicales. L'interface HTTP est
 
 Voir le [guide d'installation et de démarrage](./GUIDE_INSTALLATION.md) pour les téléchargements, la configuration de Windows et les étapes détaillées.
 
+Pour une explication simple de chaque dossier, fichier et classe du projet, voir [EXPLICATION_SIMPLE.md](./EXPLICATION_SIMPLE.md).
+
 ## Construire et déployer
 
 À la racine du projet :

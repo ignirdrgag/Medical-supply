@@ -1,0 +1,10 @@
+    </main>
+    <footer class="app-footer">
+        <span>MediSupply | Application JEE de gestion des fournitures medicales</span>
+        <div class="footer-links">
+            <span>Jakarta Servlet 6 | JSP | MySQL</span>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

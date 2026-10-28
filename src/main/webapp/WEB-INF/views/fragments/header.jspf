@@ -1,0 +1,68 @@
+<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="jakarta.tags.core" %>
+<%@ taglib prefix="fn" uri="jakarta.tags.functions" %>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="current" value="${sessionScope.currentUser}"/>
+<!doctype html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><c:out value="${empty pageTitle ? 'MediSupply' : pageTitle}"/> - MediSupply</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="stylesheet" href="${ctx}/assets/css/app.css">
+</head>
+<body>
+<div class="app-shell">
+    <header class="topbar">
+        <div class="topbar-group">
+            <a class="brand" href="${ctx}/home">
+                <span class="brand-mark">
+                    <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M9 3.375V14.625" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M3.375 9H14.625" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </span>
+                <div class="brand-text">
+                    <span class="brand-title">MediSupply</span>
+                    <span class="brand-subtitle">Gestion de la chaine medicale</span>
+                </div>
+            </a>
+            <c:if test="${not empty current}">
+                <nav class="topnav">
+                    <a class="topnav-link ${requestScope.activeNav eq 'home' ? 'is-active' : ''}" href="${ctx}/home">Accueil</a>
+                    <a class="topnav-link ${requestScope.activeNav eq 'dashboard' ? 'is-active' : ''}" href="${ctx}${current.homePath}">Tableau de bord</a>
+                </nav>
+            </c:if>
+        </div>
+        <div class="topbar-actions">
+            <c:choose>
+                <c:when test="${empty current}">
+                    <a class="btn btn-ghost" href="${ctx}/home">Accueil</a>
+                    <a class="btn btn-primary" href="${ctx}/login">Se connecter</a>
+                </c:when>
+                <c:otherwise>
+                    <div class="user-menu">
+                        <span class="user-avatar"><c:out value="${current.initials}"/></span>
+                        <div class="user-meta">
+                            <span class="user-name"><c:out value="${current.fullName}"/></span>
+                            <span class="user-role"><c:out value="${current.roleLabel}"/></span>
+                        </div>
+                    </div>
+                    <a class="btn btn-ghost" href="${ctx}/logout">Deconnexion</a>
+                </c:otherwise>
+            </c:choose>
+        </div>
+    </header>
+    <main class="app-main">
+        <c:if test="${not empty sessionScope.flash}">
+            <div class="alert alert-${sessionScope.flashType}">
+                <div>
+                    <strong><c:out value="${sessionScope.flashType eq 'success' ? 'Succes' : 'Information'}"/></strong>
+                    <div class="cell-title-sub"><c:out value="${sessionScope.flash}"/></div>
+                </div>
+            </div>
+            <c:remove var="flash" scope="session"/>
+            <c:remove var="flashType" scope="session"/>
+        </c:if>

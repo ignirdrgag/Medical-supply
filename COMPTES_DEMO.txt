@@ -1,0 +1,25 @@
+COMPTES DE DEMONSTRATION MEDISUPPLY
+
+Administrateur
+Identifiant : admin
+Mot de passe : admin123
+
+Agent de stock
+Identifiant : staff
+Mot de passe : staff123
+
+Responsable des commandes
+Identifiant : manager
+Mot de passe : manager123
+
+Medecin
+Identifiant : doctor
+Mot de passe : doctor123
+
+Fournisseur MediSante
+Identifiant : supplier
+Mot de passe : supplier123
+
+Fournisseur PharmaLog
+Identifiant : pharmalog
+Mot de passe : supplier123
